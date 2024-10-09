@@ -1,18 +1,22 @@
 // Replace 'YOUR_API_KEY' with your actual NewsAPI key
-const apiKey = 'YOUR_API_KEY';
-const apiUrl = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
+const apiKey = 'API_KEY';
+const bapiUrl = `https://newsapi.org/v2/top-headlines?apiKey=${apiKey}`;
 
 // Function to fetch news from the API
-async function fetchNews() {
+async function fetchCategoryNews(category) {
     const newsContainer = document.getElementById('news-container');
     const loadingIndicator = document.getElementById('loading');
 
     try {
+        loadingIndicator.style.display = 'block';
+
+        //It will build the url based on the selected category
+        const apiUrl = `${bapiUrl}&category=${category}&country=us`;
         // Fetch news from the API
         const response = await fetch(apiUrl);
         const data = await response.json();
 
-        if (data.articles.length > 0) {
+        if (data.articles.length > 0 && data.articles) {
             // Remove loading indicator
             loadingIndicator.style.display = 'none';
 
@@ -38,4 +42,7 @@ async function fetchNews() {
 }
 
 // Fetch news on page load
-document.addEventListener('DOMContentLoaded', fetchNews);
+document.addEventListener('DOMContentLoaded',() => fetchCategoryNews('general'));
+
+
+
